@@ -1,5 +1,5 @@
 const express = require('express');
-const { Product } = require('./models'); // Adjust this require statement as needed for your setup
+const { Product } = require('./models');
 
 const router = express.Router();
 
