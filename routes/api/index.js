@@ -1,8 +1,11 @@
 const router = require('express').Router();
-const readerRoutes = require('./readerRoutes');
-const libraryCardRoutes = require('./libraryCardRoutes');
 
-router.use('/readers', readerRoutes);
-router.use('/cards', libraryCardRoutes);
+const productRoutes = require('./productRoutes');
+const categoryRoutes = require('./categoryRoutes');
+const tagRoutes = require('./tagRoutes');
+
+router.use('/products', productRoutes);
+router.use('/categories', categoryRoutes);
+router.use('/tags', tagRoutes);
 
 module.exports = router;
