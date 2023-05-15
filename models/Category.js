@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Catergory extends Model {}
+class Category extends Model {}
 
-Catergory.init (
+Category.init (
     {
         id: {
           type: DataTypes.INTEGER,
@@ -26,4 +26,4 @@ Catergory.init (
 );
 
 
-module.exports = Catergory;
+module.exports = Category;
