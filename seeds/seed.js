@@ -3,7 +3,7 @@ const sequelize = require('../config/connection');
 const {Category, Product, ProductTag, Tag} = require('../models');
 
 const productSeedData = require('./productSeedData');
-const categorySeedData = require ('./catergorySeedData');
+const categorySeedData = require ('./categorySeedData');
 const productTagSeedData = require('./productTagSeedData');
 const tagSeedData = require('./tagSeedData');
 
