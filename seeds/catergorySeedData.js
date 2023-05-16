@@ -1,0 +1,17 @@
+[
+  {
+    category_name: "tops",
+  },
+  {
+    category_name: "bottoms",
+  },
+  {
+    category_name: "footwear",
+  },
+  {
+    category_name: "hats",
+  },
+  {
+    category_name: "balls",
+  },
+];
