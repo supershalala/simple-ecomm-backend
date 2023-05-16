@@ -1,58 +1,62 @@
-const express = require('express');
-const { Product } = require('../../models');
+const router = require('express').Router();
+const { Product, Category, Tag, ProductTag } = require('../../models');
 
-const router = express.Router();
-
-// GET route for all products
-router.get('/products', (req, res) => {
-  Product.findAll()
-    .then(products => res.json(products))
-    .catch(err => res.status(500).json(err));
+router.get('/', async (req, res) => {
+  try {
+    const productData = await Product.findAll({
+      include: [{ model: Category }, { model: Tag, through: ProductTag, as: 'tags' }],
+    });
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-// GET route for a single product
-router.get('/products/:id', (req, res) => {
-  Product.findByPk(req.params.id)
-    .then(product => {
-      if (!product) {
-        res.status(404).json({ message: 'No product found with this id!' });
-        return;
-      }
-      res.json(product);
-    })
-    .catch(err => res.status(500).json(err));
+router.get('/:id', async (req, res) => {
+  try {
+    const productData = await Product.findByPk(req.params.id, {
+      include: [{ model: Category }, { model: Tag, through: ProductTag, as: 'tags' }],
+    });
+
+    if (!productData) {
+      res.status(404).json({ message: 'No product found with this id!' });
+      return;
+    }
+
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // POST route for a new product
-router.post('/products', (req, res) => {
-  /* req.body should look like this...
-    {
-      "product_name": "Basketball",
-      "price": "200.00",
-      "stock": "3",
-      "category_id": "2"
-    }
-  */
-  Product.create(req.body)
-    .then(product => res.json(product))
-    .catch(err => res.status(500).json(err));
+router.post('/', async (req, res) => {
+  try {
+    const productData = await Product.create(req.body);
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
 // DELETE route for a product
-router.delete('/products/:id', (req, res) => {
-  Product.destroy({
-    where: {
-      id: req.params.id
+router.delete('/:id', async (req, res) => {
+  try {
+    const productData = await Product.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!productData) {
+      res.status(404).json({ message: 'No product found with this id!' });
+      return;
     }
-  })
-    .then(product => {
-      if (!product) {
-        res.status(404).json({ message: 'No product found with this id!' });
-        return;
-      }
-      res.json(product);
-    })
-    .catch(err => res.status(500).json(err));
+
+    res.status(200).json(productData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
